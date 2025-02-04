@@ -17,11 +17,17 @@ h1 {
     margin: 20px 0;
 }
 
-#wishForm input {
+#wishForm input, #wishForm textarea {
     padding: 10px;
     margin: 5px;
     border: 2px solid #ff6347;
     border-radius: 5px;
+    width: 300px;
+}
+
+#wishForm textarea {
+    height: 100px;
+    resize: vertical;
 }
 
 button {

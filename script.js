@@ -45,6 +45,11 @@ function addWish(name, text, picURL, id = Date.now()) {
     deleteButton.onclick = () => deleteWish(id);
     wishDiv.appendChild(deleteButton);
 
+    wishDiv.onclick = (event) => {
+        event.stopPropagation();
+        toggleExpand(wishDiv);
+    };
+
     document.getElementById('wall').appendChild(wishDiv);
 }
 
@@ -76,6 +81,21 @@ function deleteWish(id) {
     localStorage.setItem('wishes', JSON.stringify(wishes));
     document.querySelector(`.wish[data-id='${id}']`).remove();
 }
+
+function toggleExpand(wishDiv) {
+    const expanded = document.querySelector('.wish.expanded');
+    if (expanded && expanded !== wishDiv) {
+        expanded.classList.remove('expanded');
+    }
+    wishDiv.classList.toggle('expanded');
+}
+
+document.addEventListener('click', (event) => {
+    const expanded = document.querySelector('.wish.expanded');
+    if (expanded && !expanded.contains(event.target)) {
+        expanded.classList.remove('expanded');
+    }
+});
 
 // Load wishes when the page loads
 window.onload = loadWishes;

@@ -85,6 +85,17 @@ button:hover {
     background-color: #ff4500;
 }
 
+/* Background Animation */
+@keyframes moveBackground {
+    0% { background-position: 0 0; }
+    100% { background-position: 100% 100%; }
+}
+
+body {
+    background: linear-gradient(45deg, #ffecd2, #fcb69f, #ff6347, #ff4500);
+    background-size: 400% 400%;
+    animation: moveBackground 15s infinite linear;
+}
 
 .confetti {
     display: flex;

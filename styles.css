@@ -95,3 +95,27 @@ button:hover {
     z-index: 10;
     position: relative;
 }
+
+/* Confetti Animation */
+@keyframes fall {
+    0% { transform: translateY(-100px) rotate(0deg); }
+    100% { transform: translateY(100vh) rotate(360deg); }
+}
+
+.confetti {
+    position: absolute;
+    top: -100px;
+    width: 10px;
+    height: 10px;
+    background: var(--confetti-color);
+    opacity: 0.8;
+    animation: fall 5s linear infinite;
+}
+
+.confetti:nth-child(odd) {
+    animation-duration: 7s;
+}
+
+.confetti:nth-child(even) {
+    animation-duration: 5s;
+}

@@ -16,10 +16,9 @@ h1 {
     margin: 20px 0;
 }
 
-#wishInput {
+#wishForm input {
     padding: 10px;
-    width: 300px;
-    margin-right: 10px;
+    margin: 5px;
     border: 2px solid #ff6347;
     border-radius: 5px;
 }
@@ -52,43 +51,21 @@ button:hover {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: left;
+    width: 300px;
 }
 
 .wish:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
-Step 3: Update the JavaScript
-Ensure your script.js file remains the same:
 
-document.getElementById('wishForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const wishInput = document.getElementById('wishInput');
-    const wishText = wishInput.value;
-    if (wishText) {
-        addWish(wishText);
-        wishInput.value = '';
-        saveWish(wishText);
-    }
-});
-
-function addWish(text) {
-    const wishDiv = document.createElement('div');
-    wishDiv.className = 'wish';
-    wishDiv.textContent = text;
-    document.getElementById('wall').appendChild(wishDiv);
+.wish img {
+    max-width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
 }
 
-function saveWish(text) {
-    let wishes = JSON.parse(localStorage.getItem('wishes')) || [];
-    wishes.push(text);
-    localStorage.setItem('wishes', JSON.stringify(wishes));
+.wish p {
+    margin: 5px 0;
 }
-
-function loadWishes() {
-    let wishes = JSON.parse(localStorage.getItem('wishes')) || [];
-    wishes.forEach(wish => addWish(wish));
-}
-
-// Load wishes when the page loads
-window.onload = loadWishes;

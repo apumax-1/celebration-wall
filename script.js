@@ -122,4 +122,4 @@ function createConfetti() {
         const confetti = document.createElement('div');
         confetti.className = 'confetti';
         confetti.style.left = `${Math.random() * 100}vw`;
-        confetti.style.animationDelay = `${Math.random
+        confetti.style.animationDelay = `${Math.random() * 10

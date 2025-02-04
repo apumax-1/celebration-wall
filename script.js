@@ -122,13 +122,4 @@ function createConfetti() {
         const confetti = document.createElement('div');
         confetti.className = 'confetti';
         confetti.style.left = `${Math.random() * 100}vw`;
-        confetti.style.animationDelay = `${Math.random() * 10}s`;
-        confetti.style.setProperty('--confetti-color', colors[Math.floor(Math.random() * colors.length)]);
-        document.body.appendChild(confetti);
-    }
-}
-
-createConfetti();
-
-// Load wishes when the page loads
-window.onload = loadWishes;
+        confetti.style.animationDelay = `${Math.random

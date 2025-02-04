@@ -8,11 +8,16 @@ document.getElementById('wishForm').addEventListener('submit', function(event) {
     const picURL = picInput.value;
 
     if (name && wishText) {
-        addWish(name, wishText, picURL);
+        const editId = document.getElementById('wishForm').dataset.editId;
+        if (editId) {
+            updateWish(editId, name, wishText, picURL);
+            document.getElementById('wishForm').removeAttribute('data-editId');
+        } else {
+            addWish(name, wishText, picURL);
+        }
         nameInput.value = '';
         wishInput.value = '';
         picInput.value = '';
-        saveWish(name, wishText, picURL);
     }
 });
 
@@ -37,12 +42,18 @@ function addWish(name, text, picURL, id = Date.now()) {
 
     const editButton = document.createElement('button');
     editButton.textContent = 'Edit';
-    editButton.onclick = () => editWish(id);
+    editButton.onclick = (event) => {
+        event.stopPropagation();
+        editWish(id);
+    };
     wishDiv.appendChild(editButton);
 
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
-    deleteButton.onclick = () => deleteWish(id);
+    deleteButton.onclick = (event) => {
+        event.stopPropagation();
+        deleteWish(id);
+    };
     wishDiv.appendChild(deleteButton);
 
     wishDiv.onclick = (event) => {
@@ -51,9 +62,10 @@ function addWish(name, text, picURL, id = Date.now()) {
     };
 
     document.getElementById('wall').appendChild(wishDiv);
+    saveWish(name, text, picURL, id);
 }
 
-function saveWish(name, text, picURL, id = Date.now()) {
+function saveWish(name, text, picURL, id) {
     let wishes = JSON.parse(localStorage.getItem('wishes')) || [];
     wishes.push({ id, name, text, picURL });
     localStorage.setItem('wishes', JSON.stringify(wishes));
@@ -71,8 +83,13 @@ function editWish(id) {
         document.getElementById('nameInput').value = wish.name;
         document.getElementById('wishInput').value = wish.text;
         document.getElementById('picInput').value = wish.picURL;
+        document.getElementById('wishForm').dataset.editId = id;
         deleteWish(id);
     }
+}
+
+function updateWish(id, name, text, picURL) {
+    addWish(name, text, picURL, id);
 }
 
 function deleteWish(id) {
@@ -96,6 +113,22 @@ document.addEventListener('click', (event) => {
         expanded.classList.remove('expanded');
     }
 });
+
+// Create confetti
+function createConfetti() {
+    const confettiCount = 100;
+    const colors = ['#ff6347', '#ff4500', '#ffd700', '#adff2f', '#00ced1'];
+    for (let i = 0; i < confettiCount; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = `${Math.random() * 100}vw`;
+        confetti.style.animationDelay = `${Math.random() * 10}s`;
+        confetti.style.setProperty('--confetti-color', colors[Math.floor(Math.random() * colors.length)]);
+        document.body.appendChild(confetti);
+    }
+}
+
+createConfetti();
 
 // Load wishes when the page loads
 window.onload = loadWishes;

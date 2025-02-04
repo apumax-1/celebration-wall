@@ -1,30 +1,51 @@
 document.getElementById('wishForm').addEventListener('submit', function(event) {
     event.preventDefault();
+    const nameInput = document.getElementById('nameInput');
     const wishInput = document.getElementById('wishInput');
+    const picInput = document.getElementById('picInput');
+    const name = nameInput.value;
     const wishText = wishInput.value;
-    if (wishText) {
-        addWish(wishText);
+    const picURL = picInput.value;
+
+    if (name && wishText) {
+        addWish(name, wishText, picURL);
+        nameInput.value = '';
         wishInput.value = '';
-        saveWish(wishText);
+        picInput.value = '';
+        saveWish(name, wishText, picURL);
     }
 });
 
-function addWish(text) {
+function addWish(name, text, picURL) {
     const wishDiv = document.createElement('div');
     wishDiv.className = 'wish';
-    wishDiv.textContent = text;
+
+    if (picURL) {
+        const img = document.createElement('img');
+        img.src = picURL;
+        wishDiv.appendChild(img);
+    }
+
+    const namePara = document.createElement('p');
+    namePara.textContent = `From: ${name}`;
+    wishDiv.appendChild(namePara);
+
+    const textPara = document.createElement('p');
+    textPara.textContent = text;
+    wishDiv.appendChild(textPara);
+
     document.getElementById('wall').appendChild(wishDiv);
 }
 
-function saveWish(text) {
+function saveWish(name, text, picURL) {
     let wishes = JSON.parse(localStorage.getItem('wishes')) || [];
-    wishes.push(text);
+    wishes.push({ name, text, picURL });
     localStorage.setItem('wishes', JSON.stringify(wishes));
 }
 
 function loadWishes() {
     let wishes = JSON.parse(localStorage.getItem('wishes')) || [];
-    wishes.forEach(wish => addWish(wish));
+    wishes.forEach(wish => addWish(wish.name, wish.text, wish.picURL));
 }
 
 // Load wishes when the page loads

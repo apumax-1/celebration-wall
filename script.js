@@ -16,9 +16,10 @@ document.getElementById('wishForm').addEventListener('submit', function(event) {
     }
 });
 
-function addWish(name, text, picURL) {
+function addWish(name, text, picURL, id = Date.now()) {
     const wishDiv = document.createElement('div');
     wishDiv.className = 'wish';
+    wishDiv.dataset.id = id;
 
     if (picURL) {
         const img = document.createElement('img');
@@ -34,18 +35,46 @@ function addWish(name, text, picURL) {
     textPara.textContent = text;
     wishDiv.appendChild(textPara);
 
+    const editButton = document.createElement('button');
+    editButton.textContent = 'Edit';
+    editButton.onclick = () => editWish(id);
+    wishDiv.appendChild(editButton);
+
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.onclick = () => deleteWish(id);
+    wishDiv.appendChild(deleteButton);
+
     document.getElementById('wall').appendChild(wishDiv);
 }
 
-function saveWish(name, text, picURL) {
+function saveWish(name, text, picURL, id = Date.now()) {
     let wishes = JSON.parse(localStorage.getItem('wishes')) || [];
-    wishes.push({ name, text, picURL });
+    wishes.push({ id, name, text, picURL });
     localStorage.setItem('wishes', JSON.stringify(wishes));
 }
 
 function loadWishes() {
     let wishes = JSON.parse(localStorage.getItem('wishes')) || [];
-    wishes.forEach(wish => addWish(wish.name, wish.text, wish.picURL));
+    wishes.forEach(wish => addWish(wish.name, wish.text, wish.picURL, wish.id));
+}
+
+function editWish(id) {
+    let wishes = JSON.parse(localStorage.getItem('wishes')) || [];
+    const wish = wishes.find(wish => wish.id === id);
+    if (wish) {
+        document.getElementById('nameInput').value = wish.name;
+        document.getElementById('wishInput').value = wish.text;
+        document.getElementById('picInput').value = wish.picURL;
+        deleteWish(id);
+    }
+}
+
+function deleteWish(id) {
+    let wishes = JSON.parse(localStorage.getItem('wishes')) || [];
+    wishes = wishes.filter(wish => wish.id !== id);
+    localStorage.setItem('wishes', JSON.stringify(wishes));
+    document.querySelector(`.wish[data-id='${id}']`).remove();
 }
 
 // Load wishes when the page loads

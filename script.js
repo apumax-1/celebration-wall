@@ -1,3 +1,18 @@
+// Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyC6YacOCKmLUAY5wVOroCGEGRNEEpG--Ag",
+    authDomain: "celebration-wall-c9534.firebaseapp.com",
+    projectId: "celebration-wall-c9534",
+    storageBucket: "celebration-wall-c9534.firebasestorage.app",
+    messagingSenderId: "676085234476",
+    appId: "1:676085234476:web:b5af1ebdde34cf76f28a89",
+    measurementId: "G-SBMC9V1SSL"
+  };
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+
 document.getElementById('wishForm').addEventListener('submit', function(event) {
     event.preventDefault();
     const nameInput = document.getElementById('nameInput');
@@ -8,20 +23,19 @@ document.getElementById('wishForm').addEventListener('submit', function(event) {
     const picURL = picInput.value;
 
     if (name && wishText) {
-        const editId = document.getElementById('wishForm').dataset.editId;
-        if (editId) {
-            updateWish(editId, name, wishText, picURL);
-            document.getElementById('wishForm').removeAttribute('data-editId');
-        } else {
-            addWish(name, wishText, picURL);
-        }
+        const newWishRef = database.ref('wishes').push();
+        newWishRef.set({
+            name: name,
+            text: wishText,
+            picURL: picURL
+        });
         nameInput.value = '';
         wishInput.value = '';
         picInput.value = '';
     }
 });
 
-function addWish(name, text, picURL, id = Date.now()) {
+function addWish(name, text, picURL, id) {
     const wishDiv = document.createElement('div');
     wishDiv.className = 'wish';
     wishDiv.dataset.id = id;
@@ -62,40 +76,39 @@ function addWish(name, text, picURL, id = Date.now()) {
     };
 
     document.getElementById('wall').appendChild(wishDiv);
-    saveWish(name, text, picURL, id);
-}
-
-function saveWish(name, text, picURL, id) {
-    let wishes = JSON.parse(localStorage.getItem('wishes')) || [];
-    wishes.push({ id, name, text, picURL });
-    localStorage.setItem('wishes', JSON.stringify(wishes));
 }
 
 function loadWishes() {
-    let wishes = JSON.parse(localStorage.getItem('wishes')) || [];
-    wishes.forEach(wish => addWish(wish.name, wish.text, wish.picURL, wish.id));
+    database.ref('wishes').on('value', (snapshot) => {
+        const wishes = snapshot.val();
+        document.getElementById('wall').innerHTML = '';
+        for (let id in wishes) {
+            addWish(wishes[id].name, wishes[id].text, wishes[id].picURL, id);
+        }
+    });
 }
 
 function editWish(id) {
-    let wishes = JSON.parse(localStorage.getItem('wishes')) || [];
-    const wish = wishes.find(wish => wish.id === id);
-    if (wish) {
+    database.ref('wishes/' + id).once('value').then((snapshot) => {
+        const wish = snapshot.val();
         document.getElementById('nameInput').value = wish.name;
         document.getElementById('wishInput').value = wish.text;
         document.getElementById('picInput').value = wish.picURL;
         document.getElementById('wishForm').dataset.editId = id;
         deleteWish(id);
-    }
+    });
 }
 
 function updateWish(id, name, text, picURL) {
-    addWish(name, text, picURL, id);
+    database.ref('wishes/' + id).set({
+        name: name,
+        text: text,
+        picURL: picURL
+    });
 }
 
 function deleteWish(id) {
-    let wishes = JSON.parse(localStorage.getItem('wishes')) || [];
-    wishes = wishes.filter(wish => wish.id !== id);
-    localStorage.setItem('wishes', JSON.stringify(wishes));
+    database.ref('wishes/' + id).remove();
     document.querySelector(`.wish[data-id='${id}']`).remove();
 }
 
@@ -122,4 +135,13 @@ function createConfetti() {
         const confetti = document.createElement('div');
         confetti.className = 'confetti';
         confetti.style.left = `${Math.random() * 100}vw`;
-        confetti.style.animationDelay = `${Math.random() * 10
+        confetti.style.animationDelay = `${Math.random() * 10}s`;
+        confetti.style.setProperty('--confetti-color', colors[Math.floor(Math.random() * colors.length)]);
+        document.body.appendChild(confetti);
+    }
+}
+
+createConfetti();
+
+// Load wishes when the page loads
+window.onload = loadWishes;

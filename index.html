@@ -7,18 +7,18 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Celebration Wall</h1>
+    <div id="wishFormContainer">
+        <form id="wishForm">
+            <input type="text" id="nameInput" placeholder="Your Name" required>
+            <textarea id="wishInput" placeholder="Your Wish" required></textarea>
+            <input type="url" id="picInput" placeholder="Image URL (optional)">
+            <button type="submit">Add Wish</button>
+        </form>
+    </div>
     <div id="wall"></div>
-    <form id="wishForm">
-        <input type="text" id="nameInput" placeholder="Your name" required>
-        <textarea id="wishInput" placeholder="Write your wish here..." required></textarea>
-        <input type="url" id="picInput" placeholder="Picture URL (optional)">
-        <button type="submit">Add Wish</button>
-    </form>
     <script src="script.js"></script>
-</body>
 
-<div class="confetti">
+    <div class="confetti">
     <script src="script.js"></script>
     <div class="confetti">
     <div class="confetti-piece"></div>
@@ -35,5 +35,8 @@
     <div class="confetti-piece"></div>
     <div class="confetti-piece"></div>
 </div>
+        
 </body>
 </html>
+
+

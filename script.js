@@ -32,6 +32,11 @@ function addWish(name, text, picURL, id) {
     if (picURL) {
         const img = document.createElement('img');
         img.src = picURL;
+        img.alt = 'Wish Image';
+        img.onerror = () => {
+            img.style.display = 'none';
+            console.error('Image failed to load:', picURL);
+        };
         wishDiv.appendChild(img);
     }
 

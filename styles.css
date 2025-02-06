@@ -9,6 +9,7 @@ body {
     padding: 20px;
     background-color: #fff;
     border-bottom: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 #wishForm {
@@ -20,6 +21,7 @@ body {
     margin-bottom: 10px;
     padding: 10px;
     font-size: 16px;
+    border-radius: 4px;
 }
 
 #wishForm button {
@@ -27,6 +29,7 @@ body {
     color: #fff;
     border: none;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 #wishForm button:hover {
@@ -35,7 +38,6 @@ body {
 
 #wishForm input, #wishForm textarea {
     border: 1px solid #ccc;
-    border-radius: 4px;
 }
 
 #wishForm textarea {
@@ -48,6 +50,12 @@ body {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.wish:hover {
+    transform: scale(1.02);
 }
 
 .wish img {
@@ -55,6 +63,7 @@ body {
     height: auto;
     display: block;
     margin-bottom: 10px;
+    border-radius: 4px;
 }
 
 .wish p {
@@ -66,85 +75,17 @@ body {
     padding: 5px 10px;
     font-size: 14px;
     cursor: pointer;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
 }
 
 .wish button:hover {
-    background-color: #ddd;
+    background-color: #0056b3;
 }
 
 .wish.expanded {
     background-color: #e9ecef;
-}
-
-.wish.expanded {
-    width: 90%;
-    max-width: 600px;
-    height: auto;
-    transform: scale(1.05);
-    z-index: 10;
-    position: relative;
-}
-
-/* Confetti Animation */
-@keyframes fall {
-    0% { transform: translateY(-100px) rotate(0deg); }
-    100% { transform: translateY(100vh) rotate(360deg); }
-}
-
-.confetti {
-    position: absolute;
-    top: -100px;
-    width: 10px;
-    height: 10px;
-    background: var(--confetti-color);
-    opacity: 0.8;
-    animation: fall 5s linear infinite;
-}
-
-.confetti:nth-child(odd) {
-    animation-duration: 7s;
-}
-
-.confetti:nth-child(even) {
-    animation-duration: 5s;
-}
-
-.confetti-piece {
-    position: absolute;
-    width: 10px;
-    height: 30px;
-    background: #ffd300;
-    top: 0;
-    opacity: 0;
-}
-
-.confetti-piece:nth-child(odd) {
-    background: #7431e8;
-}
-
-.confetti-piece:nth-child(even) {
-    z-index: 1;
-}
-
-.confetti-piece:nth-child(4n) {
-    width: 5px;
-    height: 12px;
-    animation-duration: 2000ms;
-}
-
-.confetti-piece:nth-child(3n) {
-    width: 3px;
-    height: 10px;
-    animation-duration: 2500ms;
-    animation-delay: 1000ms;
-}
-
-.confetti-piece:nth-child(4n-7) {
-    background: red;
-}
-
-@keyframes makeItRain {
-    from { opacity: 0; }
-    50% { opacity: 1; }
-    to { transform: translateY(350px); }
 }

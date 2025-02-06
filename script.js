@@ -159,14 +159,4 @@ style.textContent = `
             opacity: 1;
         }
         100% {
-            transform: translateY(100vh) rotate(360deg);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
-
-createConfetti();
-
-// Load wishes when the page loads
-window.onload = loadWishes;
+            transform: translateY(100vh) rotate(360deg

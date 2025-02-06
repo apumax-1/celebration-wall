@@ -1,96 +1,79 @@
 body {
-    font-family: 'Arial', sans-serif;
-    text-align: center;
-    background: linear-gradient(to right, #ffecd2, #fcb69f);
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
     margin: 0;
     padding: 0;
-    overflow: hidden;
 }
 
-h1 {
-    color: #ff6347;
-    font-size: 3em;
-    margin-top: 20px;
+#wishFormContainer {
+    padding: 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
 }
 
 #wishForm {
-    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+#wishForm input, #wishForm textarea, #wishForm button {
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+#wishForm button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#wishForm button:hover {
+    background-color: #0056b3;
 }
 
 #wishForm input, #wishForm textarea {
-    padding: 10px;
-    margin: 5px;
-    border: 2px solid #ff6347;
-    border-radius: 5px;
-    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 #wishForm textarea {
-    height: 100px;
     resize: vertical;
 }
 
-button {
-    padding: 10px 20px;
-    background-color: #ff6347;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #ff4500;
-}
-
-#wall {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.wish {
-    background-color: #fffacd;
-    padding: 15px;
+#wish {
+    background-color: #fff;
     margin: 10px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, width 0.3s ease, height 0.3s ease;
-    text-align: left;
-    width: 300px;
-    cursor: pointer;
-}
-
-.wish:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 .wish img {
     max-width: 100%;
-    border-radius: 5px;
+    height: auto;
+    display: block;
     margin-bottom: 10px;
 }
 
 .wish p {
-    margin: 5px 0;
+    margin: 0 0 10px;
 }
 
 .wish button {
-    margin-top: 10px;
+    margin-right: 5px;
     padding: 5px 10px;
-    background-color: #ff6347;
-    color: white;
-    border: none;
-    border-radius: 5px;
+    font-size: 14px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
 .wish button:hover {
-    background-color: #ff4500;
+    background-color: #ddd;
+}
+
+.wish.expanded {
+    background-color: #e9ecef;
 }
 
 .wish.expanded {

@@ -7,7 +7,7 @@ const firebaseConfig = {
     messagingSenderId: "676085234476",
     appId: "1:676085234476:web:b5af1ebdde34cf76f28a89",
     measurementId: "G-SBMC9V1SSL"
-  };
+};
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -22,16 +22,22 @@ document.getElementById('wishForm').addEventListener('submit', function(event) {
     const wishText = wishInput.value;
     const picURL = picInput.value;
 
+    console.log('Form submitted:', { name, wishText, picURL });
+
     if (name && wishText) {
         const newWishRef = database.ref('wishes').push();
         newWishRef.set({
             name: name,
             text: wishText,
             picURL: picURL
+        }).then(() => {
+            console.log('Wish added to database');
+            nameInput.value = '';
+            wishInput.value = '';
+            picInput.value = '';
+        }).catch((error) => {
+            console.error('Error adding wish:', error);
         });
-        nameInput.value = '';
-        wishInput.value = '';
-        picInput.value = '';
     }
 });
 

@@ -1,18 +1,3 @@
-// Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyC6YacOCKmLUAY5wVOroCGEGRNEEpG--Ag",
-    authDomain: "celebration-wall-c9534.firebaseapp.com",
-    projectId: "celebration-wall-c9534",
-    storageBucket: "celebration-wall-c9534.firebasestorage.app",
-    messagingSenderId: "676085234476",
-    appId: "1:676085234476:web:b5af1ebdde34cf76f28a89",
-    measurementId: "G-SBMC9V1SSL"
-};
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
-
 document.getElementById('wishForm').addEventListener('submit', function(event) {
     event.preventDefault();
     const nameInput = document.getElementById('nameInput');
